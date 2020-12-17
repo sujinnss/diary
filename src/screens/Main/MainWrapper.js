@@ -6,9 +6,19 @@ const Container = styled.View`
   align-items: center;
   background-color: black;
 `;
+const Text = styled.Text`
+  flex: 1;
+  align-items: center;
+  color: antiquewhite;
+  background-color: black;
+`;
 
 const MainWrapper = () => {
-  return <Container>main View</Container>;
+  return (
+    <Container>
+      <Text>main View</Text>
+    </Container>
+  );
 };
 
 export default MainWrapper;
