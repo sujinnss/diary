@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { Image, StatusBar } from "react-native";
+import { Image, ImageBackground, StatusBar, View } from "react-native";
 import AppLoading from "expo-app-loading";
 import { Asset } from "expo-asset";
 import { NavigationContainer } from "@react-navigation/native";
-import Stack from "./src/navigation/Stack"
+import Stack from "./src/navigation/Stack";
 import * as Font from "expo-font";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const cacheImages = (images) => {
   return images.map((image) => {
@@ -18,6 +19,10 @@ const cacheImages = (images) => {
 };
 
 const cacheFonts = (fonts) => fonts.map((font) => Font.loadAsync(font));
+const backImage = {
+  uri:
+    "https://cdn.crowdpic.net/list-thumb/thumb_l_E77B43B230AC43C64681B28CB9646E43.jpg",
+};
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -33,12 +38,24 @@ export default function App() {
   const onFinish = () => setLoading(false);
 
   return loading ? (
-    <>
-      <NavigationContainer>
-        <Stack />
-      </NavigationContainer>
-      <StatusBar barStyle={"light-content"} />
-    </>
+    <SafeAreaProvider>
+      <View style={{ flex: 1 }}>
+        <ImageBackground
+          style={{
+            flex: 1,
+            resizeMode: "cover",
+            justifyContent: "center",
+            alignSelf: "stretch",
+          }}
+          source={backImage}
+        >
+          <NavigationContainer>
+            <Stack />
+          </NavigationContainer>
+          <StatusBar barStyle={"light-content"} />
+        </ImageBackground>
+      </View>
+    </SafeAreaProvider>
   ) : (
     <AppLoading
       startAsync={loadAssets}
