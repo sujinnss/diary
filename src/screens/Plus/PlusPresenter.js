@@ -12,12 +12,12 @@ const Text = styled.Text`
   background-color: black;
 `;
 
-const SettingWrapper = () => {
+const PlusPresenter = () => {
   return (
     <Container>
-      <Text>Setting View</Text>
+      <Text>plus 화면 </Text>
     </Container>
   );
 };
 
-export default SettingWrapper;
+export default PlusPresenter;

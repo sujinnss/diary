@@ -1,8 +1,8 @@
 import React from "react";
-import SettingWrapper from "./SettingWrapper";
+import SettingPresenter from "./SettingPresenter";
 
 const SettingContainer = () => {
-  return <SettingWrapper />;
+  return <SettingPresenter />;
 };
 
 export default SettingContainer;

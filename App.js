@@ -1,6 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { Image, ImageBackground, StatusBar, View } from "react-native";
+import {
+  Image,
+  ImageBackground,
+  StatusBar,
+  View,
+  SafeAreaView,
+} from "react-native";
 import AppLoading from "expo-app-loading";
 import { Asset } from "expo-asset";
 import { NavigationContainer } from "@react-navigation/native";
@@ -26,19 +32,19 @@ const backImage = {
 
 export default function App() {
   const [loading, setLoading] = useState(true);
-
+  
   const loadAssets = () => {
     const images = cacheImages([
-      "https://images.unsplash.com/photo-1571847140471-1d7766e825ea?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTJ8fHBvc3RlcnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-      require("./assets/favicon.png"),
+      "https://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg",
+      require("./assets/splash.png"),
     ]);
     const fonts = cacheFonts([Ionicons.font]);
     return Promise.all([...images, ...fonts]);
   };
   const onFinish = () => setLoading(false);
 
-  return loading ? (
-    <SafeAreaProvider>
+  return !loading ? (
+    <SafeAreaView style={{ flex: 1, backgroundColor: "black" }}>
       <View style={{ flex: 1 }}>
         <ImageBackground
           style={{
@@ -55,7 +61,7 @@ export default function App() {
           <StatusBar barStyle={"light-content"} />
         </ImageBackground>
       </View>
-    </SafeAreaProvider>
+    </SafeAreaView>
   ) : (
     <AppLoading
       startAsync={loadAssets}

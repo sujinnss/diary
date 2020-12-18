@@ -1,8 +1,8 @@
 import React from "react";
-import PlusWrapper from "./PlusWrapper";
+import PlusPresenter from "./PlusPresenter";
 
 const PlusContainer = () => {
-  return <PlusWrapper />;
+  return <PlusPresenter />;
 };
 
 export default PlusContainer;

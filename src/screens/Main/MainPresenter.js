@@ -3,6 +3,7 @@ import styled from "styled-components/native";
 import { Dimensions, TouchableOpacity, ImageBackground } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Day from "../../components/Day";
 
 const window = Dimensions.get("window");
 const screen = Dimensions.get("screen");
@@ -39,14 +40,14 @@ const ViewWrapper = styled.View`
   align-items: center;
 `;
 
-const MainWrapper = () => {
+const MainPresenter = () => {
   const navigation = useNavigation();
   const goToPlus = () => navigation.navigate("Plus");
 
   return (
     <ViewWrapper>
       <ContentView>
-        <Text>main View</Text>
+          <Day/>
       </ContentView>
       <TouchableButton onPress={goToPlus}>
         <ButtonText>+</ButtonText>
@@ -55,4 +56,4 @@ const MainWrapper = () => {
   );
 };
 
-export default MainWrapper;
+export default MainPresenter;
