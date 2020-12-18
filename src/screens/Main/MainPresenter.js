@@ -23,21 +23,23 @@ const TouchableButton = styled(TouchableOpacity)`
   justify-content: center;
   align-items: center;
   border-radius: 100px;
-  background-color: orange;
+  background-color: #38393b;
 `;
 
 const ButtonText = styled.Text`
   font-size: 35px;
-  color: #fa1c1c;
+  color: #ffffff;
 `;
 
 const ContentView = styled.View`
   flex: 1;
+  flex-direction: row;
   align-self: stretch;
 `;
 const ViewWrapper = styled.View`
   flex: 1;
   align-items: center;
+  background-color: white;
 `;
 
 const MainPresenter = () => {
@@ -47,6 +49,8 @@ const MainPresenter = () => {
   return (
     <ViewWrapper>
       <ContentView>
+          <Day/>
+          <Day/>
           <Day/>
       </ContentView>
       <TouchableButton onPress={goToPlus}>

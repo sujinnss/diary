@@ -5,15 +5,23 @@ import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Detail from "../screens/Detail";
 
+const TouchableButton = styled(TouchableOpacity)`
+  width: 100px;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+`;
+
 const Container = styled.View`
- 
+  width: 100px;
+  height: 100px;
 `;
 
 const Image = styled.Image`
   width: 100px;
   height: 100px;
   border-radius: 50px;
-
 `;
 
 const Day = () => {
@@ -21,11 +29,11 @@ const Day = () => {
   const goToDetail = () => navigation.navigate("Detail");
 
   return (
-    <TouchableOpacity onPress={goToDetail}>
+    <TouchableButton onPress={goToDetail}>
       <Container>
         <Image source={require("../img/abo.png")} />
       </Container>
-    </TouchableOpacity>
+    </TouchableButton>
   );
 };
 
