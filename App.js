@@ -32,7 +32,7 @@ const backImage = {
 
 export default function App() {
   const [loading, setLoading] = useState(true);
-  
+
   const loadAssets = () => {
     const images = cacheImages([
       "https://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg",
@@ -44,7 +44,8 @@ export default function App() {
   const onFinish = () => setLoading(false);
 
   return !loading ? (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "black" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#EEEDE6" }}>
+      <StatusBar barStyle={"dark-content"} />
       <View style={{ flex: 1 }}>
         <ImageBackground
           style={{
@@ -58,7 +59,6 @@ export default function App() {
           <NavigationContainer>
             <Stack />
           </NavigationContainer>
-          <StatusBar barStyle={"light-content"} />
         </ImageBackground>
       </View>
     </SafeAreaView>

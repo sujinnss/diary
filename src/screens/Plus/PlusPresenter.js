@@ -10,24 +10,38 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
 
 // 다른 페이지로 넘어갈 경우 달력 초기화 하애함
 const Container = styled.View`
   height: 70%;
-  width: 95%;
-  border: black;
+  width: 100%;
+  border: 1.5px #2d2d2d;
   padding: 20px;
 `;
 
 const ModalContainer = styled.View`
-  background-color: #f1eee2;
-  opacity: 0.97;
+  background-color: #dbd8ce;
+  opacity: 0.98;
   flex: 1;
+`;
+
+const ViewDateTimePicker = styled.View`
+  width: 90%;
+  background-color: #efefef;
 `;
 
 const Row = styled.View`
   flex-direction: row;
+  justify-content: space-between;
 `;
+// const ButtonLeft = styled.View`
+// justify-content: flex-start;
+// `;
+// const ButtonRight = styled.View`
+//   justify-content: flex-end;
+// `;
+
 const TextDay = styled.Text`
   width: 50px;
   height: 50px;
@@ -73,7 +87,6 @@ const PlusPresenter = () => {
   return (
     <Container>
       <TextDay onPress={showDatepicker}>{day} 일</TextDay>
-
       <Modal
         animationType="slide "
         transparent={true}
@@ -86,9 +99,7 @@ const PlusPresenter = () => {
           <ModalContainer
             style={{ justifyContent: "center", alignItems: "center" }}
           >
-            <View
-              style={{ width: "90%", height: 260, backgroundColor: "white" }}
-            >
+            <ViewDateTimePicker>
               <DateTimePicker
                 testID="dateTimePicker"
                 value={date}
@@ -103,16 +114,9 @@ const PlusPresenter = () => {
                     setModalVisible(!modalVisible);
                   }}
                 >
-                  <Text
-                    style={{
-                      fontSize: "20px",
-                      backgroundColor: "blue",
-                      width: 50,
-                    }}
-                  >
-                    Hide
-                  </Text>
+                  <FontAwesome name="glass" size={24} color="black" />
                 </TouchableOpacity>
+
                 <TouchableOpacity
                   onPress={() => {
                     setModalVisible(!modalVisible);
@@ -120,16 +124,15 @@ const PlusPresenter = () => {
                 >
                   <Text
                     style={{
-                      fontSize: "20px",
                       backgroundColor: "orange",
                       width: 50,
                     }}
                   >
-                    OK
+                    V
                   </Text>
                 </TouchableOpacity>
               </Row>
-            </View>
+            </ViewDateTimePicker>
           </ModalContainer>
         )}
       </Modal>
