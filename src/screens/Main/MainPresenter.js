@@ -1,20 +1,15 @@
 import React from "react";
 import styled from "styled-components/native";
-import {
-  Dimensions,
-  TouchableOpacity,
-  ImageBackground,
-  View,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import {TouchableOpacity,} from "react-native";
+import {useNavigation} from "@react-navigation/native";
 import Day from "../../components/Day";
 import ViewWrapper from "../../components/ViewWrapper";
 
-const window = Dimensions.get("window");
-const screen = Dimensions.get("screen");
-
-console.log("window:", window);
-console.log("screen:", screen);
+// const window = Dimensions.get("window");
+// const screen = Dimensions.get("screen");
+//
+// console.log("window:", window);
+// console.log("screen:", screen);
 
 const Text = styled.Text`
   align-items: center;
@@ -24,7 +19,7 @@ const Text = styled.Text`
 
 const ButtonView = styled.View`
   align-items: center;
-`
+`;
 const TouchableButton = styled(TouchableOpacity)`
   width: 60px;
   height: 60px;
@@ -50,8 +45,6 @@ const ContentView = styled.View`
 //   background-color: white;
 // `;
 
-
-
 const MainPresenter = () => {
   const navigation = useNavigation();
   const goToPlus = () => navigation.navigate("Plus");
@@ -71,5 +64,8 @@ const MainPresenter = () => {
     </ViewWrapper>
   );
 };
+
+
+
 
 export default MainPresenter;

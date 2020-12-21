@@ -1,19 +1,18 @@
 import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
+import {createStackNavigator} from "@react-navigation/stack";
 import Main from "../screens/Main";
 import Setting from "../screens/Setting";
 import Plus from "../screens/Plus";
 import Detail from "../screens/Detail";
-import LogoTitle from "../components/LogoTitle";
-import { Button } from "react-native";
+import {Ionicons} from "@expo/vector-icons";
+import dayjs from "dayjs";
+import {useSelector} from "react-redux";
 
 const StackNav = createStackNavigator();
 
 const Stack = () => {
-  // const insets = useSafeAreaInsets();
-
+    const form = useSelector(state => state.diary.form)
   return (
-    // <View style={{ paddingBottom: insets.bottom ,flex:1}}>
     <>
       <StackNav.Navigator
         screenOptions={{
@@ -24,14 +23,21 @@ const Stack = () => {
           headerBackTitleVisible: false,
         }}
       >
-        <StackNav.Screen name="Main" component={Main} />
         <StackNav.Screen
           options={{
-            headerTitle: "DECEMBER",
+            title: dayjs().format("MM월 YYYY"),
+          }}
+          name="Main"
+          component={Main}
+        />
+        <StackNav.Screen
+          options={{
+            title: "DECEMBER",
             headerRight: () => (
-              <Button
-                onPress={() => alert("This is a button!")}
-                title="SAVE"
+              <Ionicons
+                onPress={() => alert(form)}
+                name="checkmark"
+                size={30}
                 color="black"
               />
             ),

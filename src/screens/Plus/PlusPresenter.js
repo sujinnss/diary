@@ -1,16 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components/native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import {
-  TextInput,
-  Button,
-  Modal,
-  Alert,
-  TouchableHighlight,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import { Alert, Modal, TextInput, TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import dayjs from "dayjs";
+import { useDispatch, useSelector } from "react-redux";
+import { changeDate, changeText } from "../../redux/diarySlice";
 
 // 다른 페이지로 넘어갈 경우 달력 초기화 하애함
 const Container = styled.View`
@@ -28,6 +23,7 @@ const ModalContainer = styled.View`
 
 const ViewDateTimePicker = styled.View`
   width: 90%;
+  padding: 20px;
   background-color: #efefef;
 `;
 
@@ -35,12 +31,6 @@ const Row = styled.View`
   flex-direction: row;
   justify-content: space-between;
 `;
-// const ButtonLeft = styled.View`
-// justify-content: flex-start;
-// `;
-// const ButtonRight = styled.View`
-//   justify-content: flex-end;
-// `;
 
 const TextDay = styled.Text`
   width: 50px;
@@ -58,20 +48,21 @@ const Text = styled.Text`
 `;
 
 const PlusPresenter = () => {
-  const [date, setDate] = useState(new Date());
+  const dispatch = useDispatch();
+  const { date, text } = useSelector((store) => store.diary.form);
+
+  // const [date, setDate] = useState(dayjs());
+  console.log(date);
   const [mode, setMode] = useState("default");
   const [show, setShow] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-
-  const [value, setValue] = useState("Input Text");
-  const day = 13;
-
-  // const DateTimePicker = require("@react-native-community/datetimepicker");
+  const [value, setValue] = useState("");
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     // setShow(Platform.OS === "ios");
-    setDate(currentDate);
+    // setDate(currentDate);
+    dispatch(changeDate(currentDate));
   };
 
   const showMode = (currentMode) => {
@@ -84,9 +75,16 @@ const PlusPresenter = () => {
     showMode("date");
   };
 
+  const handleSave = () => {
+    setModalVisible(!modalVisible);
+  };
+  const handleChangeText = (text) => {
+    dispatch(changeText(text));
+  };
+
   return (
     <Container>
-      <TextDay onPress={showDatepicker}>{day} 일</TextDay>
+      <TextDay onPress={showDatepicker}>{dayjs(date).format("DD")}일</TextDay>
       <Modal
         animationType="slide "
         transparent={true}
@@ -101,8 +99,7 @@ const PlusPresenter = () => {
           >
             <ViewDateTimePicker>
               <DateTimePicker
-                testID="dateTimePicker"
-                value={date}
+                value={new Date(+date)}
                 mode={mode}
                 is24Hour={false}
                 display="spinner"
@@ -114,22 +111,10 @@ const PlusPresenter = () => {
                     setModalVisible(!modalVisible);
                   }}
                 >
-                  <FontAwesome name="glass" size={24} color="black" />
+                  <Ionicons name="close-sharp" size={30} color="black" />
                 </TouchableOpacity>
-
-                <TouchableOpacity
-                  onPress={() => {
-                    setModalVisible(!modalVisible);
-                  }}
-                >
-                  <Text
-                    style={{
-                      backgroundColor: "orange",
-                      width: 50,
-                    }}
-                  >
-                    V
-                  </Text>
+                <TouchableOpacity onPress={handleSave}>
+                  <Ionicons name="checkmark" size={30} color="black" />
                 </TouchableOpacity>
               </Row>
             </ViewDateTimePicker>
@@ -138,10 +123,11 @@ const PlusPresenter = () => {
       </Modal>
 
       <TextInput
-        placeholderTextColor={"red"}
+        placeholder="input"
+        placeholderTextColor={"gray"}
         style={{ height: 40, borderColor: "gray", textAlign: "center" }}
-        onChangeText={(text) => setValue(text)}
-        value={value}
+        onChangeText={handleChangeText}
+        value={text}
       />
     </Container>
   );

@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { Image, ImageBackground, StatusBar, View, SafeAreaView } from "react-native";
-
+import {
+  Image,
+  ImageBackground,
+  StatusBar,
+  View,
+  SafeAreaView,
+} from "react-native";
+import { Provider } from "react-redux";
 import AppLoading from "expo-app-loading";
 import { Asset } from "expo-asset";
 import { NavigationContainer } from "@react-navigation/native";
 import Stack from "./src/navigation/Stack";
 import * as Font from "expo-font";
+import store from "./src/redux/store";
 
 const cacheImages = (images) => {
   return images.map((image) => {
@@ -36,26 +43,28 @@ export default function App() {
     return Promise.all([...images, ...fonts]);
   };
   const onFinish = () => setLoading(false);
-
+  console.log(store)
   return !loading ? (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#EEEDE6" }}>
-      <StatusBar barStyle={"dark-content"} />
-      <View style={{ flex: 1 }}>
-        <ImageBackground
-          style={{
-            flex: 1,
-            resizeMode: "cover",
-            justifyContent: "center",
-            alignSelf: "stretch",
-          }}
-          source={backImage}
-        >
-          <NavigationContainer>
-            <Stack />
-          </NavigationContainer>
-        </ImageBackground>
-      </View>
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#EEEDE6" }}>
+        <StatusBar barStyle={"dark-content"} />
+        <View style={{ flex: 1 }}>
+          <ImageBackground
+            style={{
+              flex: 1,
+              resizeMode: "cover",
+              justifyContent: "center",
+              alignSelf: "stretch",
+            }}
+            source={backImage}
+          >
+            <NavigationContainer>
+              <Stack />
+            </NavigationContainer>
+          </ImageBackground>
+        </View>
+      </SafeAreaView>
+    </Provider>
   ) : (
     <AppLoading
       startAsync={loadAssets}

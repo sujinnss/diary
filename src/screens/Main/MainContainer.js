@@ -1,7 +1,8 @@
 import React from "react";
 import MainPresenter from "./MainPresenter";
 
-const MainContainer = () => {
+const MainContainer = ({navigation }) => {
+  console.log(navigation)
   return <MainPresenter />;
 };
 
