@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import {
-  Image,
-  ImageBackground,
-  StatusBar,
-  View,
-  SafeAreaView,
-} from "react-native";
+import { Image, ImageBackground, StatusBar, View, SafeAreaView } from "react-native";
+
 import AppLoading from "expo-app-loading";
 import { Asset } from "expo-asset";
 import { NavigationContainer } from "@react-navigation/native";
 import Stack from "./src/navigation/Stack";
 import * as Font from "expo-font";
-import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const cacheImages = (images) => {
   return images.map((image) => {
