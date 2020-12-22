@@ -1,12 +1,13 @@
-import React, { useEffect, useState, useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import styled from "styled-components/native";
 import { Alert, Modal, TextInput, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
-import { changeDate, changeText, addDiary } from "../../redux/diarySlice";
+import { addDiary, changeDate, changeText } from "../../redux/diarySlice";
 import DateTimePicker from "@react-native-community/datetimepicker";
-
+import { ApplicationProvider, Button, Text } from "@ui-kitten/components";
+import * as eva from "@eva-design/eva";
 // 다른 페이지로 넘어갈 경우 달력 초기화 하애함
 
 const TouchableImage = styled(TouchableOpacity)`
@@ -58,6 +59,7 @@ const TextDay = styled.Text`
 
 const ViewText = styled.View`
   /* border: 1px solid pink; */
+  margin-bottom: 10px;
 `;
 
 const ViewImage = styled.View`
@@ -65,10 +67,10 @@ const ViewImage = styled.View`
   align-items: center;
 `;
 
-const Text = styled.Text`
-  align-items: center;
-  color: red;
-`;
+// const Text = styled.Text`
+//   align-items: center;
+//   color: red;
+// `;
 
 const ButtonSave = styled.Button``;
 
@@ -103,10 +105,6 @@ const PlusPresenter = ({ navigation }) => {
     dispatch(addDiary({ text, date }));
   };
 
-  useEffect(() => {
-    alert(dayjs(date).format("DD"));
-  }, [date]);
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => <ButtonSave onPress={handleAddDiary} title="save" />,
@@ -114,60 +112,63 @@ const PlusPresenter = ({ navigation }) => {
   }, [navigation]);
 
   return (
-    <Container>
-      <TextDay onPress={showMode}>{dayjs(date).format("DD")}일</TextDay>
-      <Modal
-        animationType="slide "
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-        }}
-      >
-        {modalVisible && (
-          <ModalContainer
-            style={{ justifyContent: "center", alignItems: "center" }}
-          >
-            <ViewDateTimePicker>
-              <DateTimePicker
-                value={new Date(+date)}
-                mode="date"
-                display
-                onChange={onChange}
-              />
-              <Row>
-                <TouchableOpacity
-                  onPress={() => {
-                    setModalVisible(!modalVisible);
-                  }}
-                >
-                  <Ionicons name="close-sharp" size={30} color="black" />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handleSave}>
-                  <Ionicons name="checkmark" size={30} color="black" />
-                </TouchableOpacity>
-              </Row>
-            </ViewDateTimePicker>
-          </ModalContainer>
-        )}
-      </Modal>
-      <ViewImage>
-        <TouchableImage>
-          <ImageDuck source={require("../../img/abo.png")} />
-        </TouchableImage>
-      </ViewImage>
-      <ViewText>
-        <TextInput
-          placeholder="input"
-          placeholderTextColor={"gray"}
-          style={{ borderColor: "gray", textAlign: "center" }}
-          onChangeText={handleChangeText}
-          value={text}
-          multiline={true}
-          maxLength={1000}
-        />
-      </ViewText>
-    </Container>
+    <ApplicationProvider {...eva} theme={eva.light}>
+      <Container>
+        <Text>tetet</Text>
+        <TextDay onPress={showMode}>{dayjs(date).format("DD")}일</TextDay>
+        <Modal
+          animationType="slide "
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+          }}
+        >
+          {modalVisible && (
+            <ModalContainer
+              style={{ justifyContent: "center", alignItems: "center" }}
+            >
+              <ViewDateTimePicker>
+                <DateTimePicker
+                  value={new Date(+date)}
+                  mode="date"
+                  display
+                  onChange={onChange}
+                />
+                <Row>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setModalVisible(!modalVisible);
+                    }}
+                  >
+                    <Ionicons name="close-sharp" size={30} color="black" />
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={handleSave}>
+                    <Ionicons name="checkmark" size={30} color="black" />
+                  </TouchableOpacity>
+                </Row>
+              </ViewDateTimePicker>
+            </ModalContainer>
+          )}
+        </Modal>
+        <ViewImage>
+          <TouchableImage>
+            <ImageDuck source={require("../../img/abo.png")} />
+          </TouchableImage>
+        </ViewImage>
+        <ViewText>
+          <TextInput
+            placeholder="Input message"
+            placeholderTextColor={"gray"}
+            style={{ borderColor: "gray", textAlign: "center" }}
+            onChangeText={handleChangeText}
+            value={text}
+            multiline={true}
+            maxLength={1000}
+          />
+        </ViewText>
+      </Container>
+    </ApplicationProvider>
   );
 };
 

@@ -3,8 +3,6 @@ import PlusPresenter from "./PlusPresenter";
 import styled from "styled-components/native";
 import ViewWrapper from "../../components/ViewWrapper";
 
-
-
 // 1.상단의 날짜
 // 2. 싱단 왼쪽의 날짜 조회
 

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
-import {TouchableOpacity,} from "react-native";
+import {TouchableOpacity} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import Day from "../../components/Day";
 import ViewWrapper from "../../components/ViewWrapper";
