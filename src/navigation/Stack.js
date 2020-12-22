@@ -1,17 +1,17 @@
 import React from "react";
-import {createStackNavigator} from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import Main from "../screens/Main";
 import Setting from "../screens/Setting";
 import Plus from "../screens/Plus";
 import Detail from "../screens/Detail";
-import {Ionicons} from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import dayjs from "dayjs";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 
 const StackNav = createStackNavigator();
 
 const Stack = () => {
-    const form = useSelector(state => state.diary.form)
+  const form = useSelector((state) => state.diary.form);
   return (
     <>
       <StackNav.Navigator
@@ -33,14 +33,14 @@ const Stack = () => {
         <StackNav.Screen
           options={{
             title: "DECEMBER",
-            headerRight: () => (
-              <Ionicons
-                onPress={() => alert(form)}
-                name="checkmark"
-                size={30}
-                color="black"
-              />
-            ),
+            // headerRight: () => (
+            //   <Ionicons
+            //     onPress={() => alert(form.date)}
+            //     name="checkmark"
+            //     size={30}
+            //     color="black"
+            //   />
+            // ),
           }}
           name="Plus"
           component={Plus}
