@@ -101,7 +101,7 @@ const PlusPresenter = ({ navigation }) => {
   const handleAddDiary = () => {
     console.log(text);
     console.log(date);
-    dispatch(addDiary({text, date}));
+    dispatch(addDiary({text, date: +date}));
   };
 
   useEffect(() => {
@@ -119,7 +119,7 @@ const PlusPresenter = ({ navigation }) => {
         />
       ),
     });
-  }, [navigation]);
+  }, [navigation,text,date]);
 
   return (
     <Container>
