@@ -1,13 +1,15 @@
-import React, { useLayoutEffect, useState, useEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import styled from "styled-components/native";
-import { Alert, Modal, TextInput, TouchableOpacity } from "react-native";
+import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import dayjs from "dayjs";
-import { useDispatch, useSelector } from "react-redux";
-import { addDiary, changeDate, changeText } from "../../redux/diarySlice";
-import { Datepicker } from "@ui-kitten/components";
+import { useDispatch } from "react-redux";
+import { addDiary } from "../../redux/diarySlice";
+import { Card, Datepicker, Modal } from "@ui-kitten/components";
 
 // 다른 페이지로 넘어갈 경우 달력 초기화 하애함
+// 문제점 : ios는 cal 가운데 정렬이 됨 웹이랑 안드로이드는 가운데 정렬이 안됨
+
 
 const TouchableImage = styled(TouchableOpacity)`
   width: 150px;
@@ -29,12 +31,6 @@ const Container = styled.View`
   padding: 20px;
 `;
 
-const ModalContainer = styled.View`
-  background-color: #dbd8ce;
-  opacity: 0.98;
-  flex: 1;
-`;
-
 const ViewDateTimePicker = styled.View`
   width: 90%;
   padding: 20px;
@@ -44,6 +40,7 @@ const ViewDateTimePicker = styled.View`
 const Row = styled.View`
   flex-direction: row;
   justify-content: space-between;
+  padding-top: 8px;
 `;
 
 const TextDay = styled.Text`
@@ -66,10 +63,21 @@ const ViewImage = styled.View`
   align-items: center;
 `;
 
-// const Text = styled.Text`
-//   align-items: center;
-//   color: red;
-// `;
+const TextDatepicker = styled.Text`
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
+`;
+
+const styles = StyleSheet.create({
+  container: {
+    minHeight: 192,
+  },
+  backdrop: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+});
 
 const PlusPresenter = ({ navigation }) => {
   console.log(navigation);
@@ -92,6 +100,11 @@ const PlusPresenter = ({ navigation }) => {
     setModalVisible(false);
     // dispatch(changeDate(date));
   };
+  const handleDateCancel = () => {
+    setModalVisible(false);
+    setDate(new Date());
+  };
+
   const handleChangeText = (nextText) => {
     console.log(nextText);
     setText(nextText);
@@ -101,7 +114,7 @@ const PlusPresenter = ({ navigation }) => {
   const handleAddDiary = () => {
     console.log(text);
     console.log(date);
-    dispatch(addDiary({text, date: +date}));
+    dispatch(addDiary({ text, date: +date }));
   };
 
   useEffect(() => {
@@ -119,42 +132,38 @@ const PlusPresenter = ({ navigation }) => {
         />
       ),
     });
-  }, [navigation,text,date]);
+  }, [navigation, text, date]);
 
   return (
     <Container>
       <TextDay onPress={showMode}>{dayjs(date).format("DD")}일</TextDay>
 
-      {modalVisible && (
-        <ModalContainer
-          style={{ justifyContent: "center", alignItems: "center" }}
-        >
-          <ViewDateTimePicker>
-            {/*<DateTimePicker*/}
-            {/*  value={new Date(+date)}*/}
-            {/*  mode="date"*/}
-            {/*  display*/}
-            {/*  onChange={onChange}*/}
-            {/*/>*/}
-            <Datepicker
-              date={date}
-              onSelect={(nextDate) => setDate(nextDate)}
-            />
-            <Row>
-              <TouchableOpacity
-                onPress={() => {
-                  setModalVisible(false);
-                }}
-              >
-                <Ionicons name="close-sharp" size={30} color="black" />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={handleSave}>
-                <Ionicons name="checkmark" size={30} color="black" />
-              </TouchableOpacity>
-            </Row>
-          </ViewDateTimePicker>
-        </ModalContainer>
-      )}
+      <Modal
+        visible={modalVisible}
+        backdropStyle={styles.backdrop}
+        onBackdropPress={() => setModalVisible(false)}
+      >
+        <Card style={{ width: 230 }} disabled={true}>
+          <TextDatepicker>날짜를 선택해주세요.</TextDatepicker>
+          <Datepicker
+            date={date}
+            onSelect={(nextDate) => setDate(nextDate)}
+            accessoryRight={() => {
+              return (
+                <Ionicons name="calendar-outline" size={24} color="black" />
+              );
+            }}
+          />
+          <Row>
+            <TouchableOpacity onPress={handleDateCancel}>
+              <Ionicons name="close-sharp" size={25} color="black" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleSave}>
+              <Ionicons name="checkmark" size={25} color="black" />
+            </TouchableOpacity>
+          </Row>
+        </Card>
+      </Modal>
 
       <ViewImage>
         <TouchableImage>
