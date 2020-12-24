@@ -9,7 +9,7 @@ import { Card, Datepicker, Modal } from "@ui-kitten/components";
 
 // 다른 페이지로 넘어갈 경우 달력 초기화 하애함
 // 문제점 : ios는 cal 가운데 정렬이 됨 웹이랑 안드로이드는 가운데 정렬이 안됨
-
+// 모달의 다른 부분을 클릭시 적용 안되게 해야함
 
 const TouchableImage = styled(TouchableOpacity)`
   width: 150px;
@@ -118,8 +118,10 @@ const PlusPresenter = ({ navigation }) => {
   };
 
   useEffect(() => {
-    console.log(text);
-  }, [text]);
+    console.log(date);
+
+    console.log(dayjs(date).format("MM-YYYY"));
+  }, [date]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -131,6 +133,7 @@ const PlusPresenter = ({ navigation }) => {
           color="black"
         />
       ),
+      title: dayjs(date).format("YYYY년 DD월"),
     });
   }, [navigation, text, date]);
 

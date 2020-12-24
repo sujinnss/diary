@@ -11,7 +11,6 @@ import { useSelector } from "react-redux";
 const StackNav = createStackNavigator();
 
 const Stack = () => {
-  const form = useSelector((state) => state.diary.form);
   return (
     <>
       <StackNav.Navigator
@@ -32,7 +31,7 @@ const Stack = () => {
         />
         <StackNav.Screen
           options={{
-            title: "DECEMBER",
+              title:"test",
             // headerRight: () => (
             //   <Ionicons
             //     onPress={() => alert(form.date)}
