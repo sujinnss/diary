@@ -17,6 +17,8 @@ import { Card, Datepicker, Modal } from "@ui-kitten/components";
 // TODO: 문제점 : ios는 cal 가운데 정렬이 됨 웹이랑 안드로이드는 가운데 정렬이 안됨
 // TODO 모달의 다른 부분을 클릭시 적용 안되게 해야함
 // TODO: 네비게이션의 header랑 safeArea 부분까지 모달의 back 배경으로 변경돼야함
+// TODO: 모달,back유효성 검사
+
 
 const { width, height } = Dimensions.get("screen");
 

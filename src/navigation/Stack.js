@@ -28,10 +28,12 @@ const Stack = () => {
           component={Main}
         />
         <StackNav.Screen
+
           options={{
-            title: "test",
+            gestureEnabled: false,
+            title: "",
             cardStyle: {
-                backgroundColor: "#EEEDE6",
+              backgroundColor: "#EEEDE6",
             },
           }}
           name="Plus"
