@@ -6,6 +6,11 @@ import {
   StatusBar,
   View,
   SafeAreaView,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Pressable,
+  ScrollView,
 } from "react-native";
 import { Provider } from "react-redux";
 import AppLoading from "expo-app-loading";
@@ -43,7 +48,7 @@ export default function App() {
     return Promise.all([...images, ...fonts]);
   };
   const onFinish = () => setLoading(false);
-  console.log(store)
+  console.log(store);
   return !loading ? (
     <Provider store={store}>
       <SafeAreaView style={{ flex: 1, backgroundColor: "#EEEDE6" }}>

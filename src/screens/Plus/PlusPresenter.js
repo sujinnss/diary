@@ -1,15 +1,31 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import styled from "styled-components/native";
-import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import {
+  Dimensions,
+  Keyboard,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
 import { addDiary } from "../../redux/diarySlice";
 import { Card, Datepicker, Modal } from "@ui-kitten/components";
 
-// 다른 페이지로 넘어갈 경우 달력 초기화 하애함
-// 문제점 : ios는 cal 가운데 정렬이 됨 웹이랑 안드로이드는 가운데 정렬이 안됨
-// 모달의 다른 부분을 클릭시 적용 안되게 해야함
+// TODO: 다른 페이지로 넘어갈 경우 달력 초기화 하애함
+// TODO: 문제점 : ios는 cal 가운데 정렬이 됨 웹이랑 안드로이드는 가운데 정렬이 안됨
+// TODO 모달의 다른 부분을 클릭시 적용 안되게 해야함
+// TODO: 네비게이션의 header랑 safeArea 부분까지 모달의 back 배경으로 변경돼야함
+
+const { width, height } = Dimensions.get("screen");
+
+export const HeaderRightButton = styled.View`
+  padding-right: 15px;
+`;
+export const HeaderLeftButton = styled.View`
+  padding-left: 15px;
+`;
 
 const TouchableImage = styled(TouchableOpacity)`
   width: 150px;
@@ -25,11 +41,12 @@ const ImageDuck = styled.Image`
 `;
 
 const Container = styled.View`
-  height: auto;
+  flex: 1;
   width: 100%;
-  border: 1.5px #2d2d2d;
+  border: 1.4px #4a4a4a;
   padding: 20px;
 `;
+// Container.displayName = "StyledContainer";
 
 const ViewDateTimePicker = styled.View`
   width: 90%;
@@ -54,8 +71,6 @@ const TextDay = styled.Text`
 `;
 
 const ViewText = styled.View`
-  /* border: 1px solid pink; */
-  margin-bottom: 10px;
 `;
 
 const ViewImage = styled.View`
@@ -63,8 +78,9 @@ const ViewImage = styled.View`
   align-items: center;
 `;
 
-const TextDatepicker = styled.Text`
+const TextModal = styled.Text`
   font-size: 15px;
+  line-height: 17px;
   font-weight: bold;
   text-align: center;
   margin-bottom: 15px;
@@ -75,6 +91,7 @@ const styles = StyleSheet.create({
     minHeight: 192,
   },
   backdrop: {
+    height: height,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
 });
@@ -85,11 +102,15 @@ const PlusPresenter = ({ navigation }) => {
   // const { date, text } = useSelector((store) => store.diary.form);
 
   // console.log(date);
-  const [show, setShow] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [value, setValue] = useState("");
   const [text, setText] = useState("");
   const [date, setDate] = useState(new Date());
+  const [backModalVisible, setBackModalVisible] = useState(false);
+  let scrollRef = useRef();
+
+  // const scrollToInput = (reactNode) => {
+  //   return scrollRef.props.scrollToFocusedInput(reactNode);
+  // };
 
   const showMode = () => {
     // setShow(true);
@@ -115,39 +136,79 @@ const PlusPresenter = ({ navigation }) => {
     console.log(text);
     console.log(date);
     dispatch(addDiary({ text, date: +date }));
+    navigation.popToTop();
   };
 
   useEffect(() => {
     console.log(date);
-
     console.log(dayjs(date).format("MM-YYYY"));
   }, [date]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => (
-        <Ionicons
-          onPress={handleAddDiary}
-          name="checkmark"
-          size={30}
-          color="black"
-        />
+      headerLeft: () => (
+        <HeaderLeftButton>
+          <Ionicons
+            name="ios-chevron-back"
+            size={30}
+            color="black"
+            onPress={() => {
+              setModalVisible(false)
+              setBackModalVisible(true);
+              Keyboard.dismiss();
+            }}
+          />
+          <Modal
+            visible={backModalVisible}
+            backdropStyle={styles.backdrop}
+            onBackdropPress={() => setBackModalVisible(false)}
+          >
+            <Card>
+              <TextModal>
+                작성한 내용이 저장되지 않아요.{"\n"}
+                화면을 닫을까요?
+              </TextModal>
+              <Row>
+                <TouchableOpacity onPress={() => setBackModalVisible(false)}>
+                  <Ionicons name="close-sharp" size={25} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    setBackModalVisible(false);
+                    navigation.goBack();
+                  }}
+                >
+                  <Ionicons name="checkmark" size={25} color="black" />
+                </TouchableOpacity>
+              </Row>
+            </Card>
+          </Modal>
+        </HeaderLeftButton>
       ),
-      title: dayjs(date).format("YYYY년 DD월"),
+      headerRight: () => (
+        <HeaderRightButton>
+          <Ionicons
+            onPress={handleAddDiary}
+            name="md-checkmark-sharp"
+            size={30}
+            color="black"
+          />
+        </HeaderRightButton>
+      ),
+      title: dayjs(date).format("YYYY년 MM월"),
     });
-  }, [navigation, text, date]);
+  }, [navigation, text, date, backModalVisible, scrollRef]);
 
   return (
     <Container>
       <TextDay onPress={showMode}>{dayjs(date).format("DD")}일</TextDay>
-
       <Modal
         visible={modalVisible}
         backdropStyle={styles.backdrop}
         onBackdropPress={() => setModalVisible(false)}
       >
         <Card style={{ width: 230 }} disabled={true}>
-          <TextDatepicker>날짜를 선택해주세요.</TextDatepicker>
+          <TextModal>날짜를 선택해주세요.</TextModal>
           <Datepicker
             date={date}
             onSelect={(nextDate) => setDate(nextDate)}

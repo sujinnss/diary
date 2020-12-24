@@ -4,9 +4,7 @@ import Main from "../screens/Main";
 import Setting from "../screens/Setting";
 import Plus from "../screens/Plus";
 import Detail from "../screens/Detail";
-import { Ionicons } from "@expo/vector-icons";
 import dayjs from "dayjs";
-import { useSelector } from "react-redux";
 
 const StackNav = createStackNavigator();
 
@@ -31,15 +29,10 @@ const Stack = () => {
         />
         <StackNav.Screen
           options={{
-              title:"test",
-            // headerRight: () => (
-            //   <Ionicons
-            //     onPress={() => alert(form.date)}
-            //     name="checkmark"
-            //     size={30}
-            //     color="black"
-            //   />
-            // ),
+            title: "test",
+            cardStyle: {
+                backgroundColor: "#EEEDE6",
+            },
           }}
           name="Plus"
           component={Plus}
