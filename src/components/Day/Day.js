@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components/native";
-import PropTypes from "prop-types";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Detail from "../screens/Detail";
-import ViewWrapper from "./ViewWrapper";
+import Detail from "../../screens/Detail";
+import store from "../../redux/store";
 
 const TouchableButton = styled(TouchableOpacity)`
   width: 80px;
@@ -13,6 +12,7 @@ const TouchableButton = styled(TouchableOpacity)`
   align-items: center;
   border-radius: 100px;
 `;
+
 //
 // const Container = styled.View`
 //   border: 1px solid blue;
@@ -32,7 +32,7 @@ const Day = () => {
 
   return (
     <TouchableButton onPress={goToDetail}>
-      <Image source={require("../img/abo.png")} />
+      <Image source={require("../../img/abo.png")} />
     </TouchableButton>
   );
 };

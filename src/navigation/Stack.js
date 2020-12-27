@@ -28,7 +28,6 @@ const Stack = () => {
           component={Main}
         />
         <StackNav.Screen
-
           options={{
             gestureEnabled: false,
             title: "",
@@ -40,7 +39,14 @@ const Stack = () => {
           component={Plus}
         />
         <StackNav.Screen name="Setting" component={Setting} />
-        <StackNav.Screen name="Detail" component={Detail} />
+        <StackNav.Screen
+            options={{
+                title: "Detail",
+                cardStyle: {
+                    backgroundColor: "#EEEDE6",
+                },
+            }}
+            name="Detail" component={Detail} />
       </StackNav.Navigator>
     </>
   );

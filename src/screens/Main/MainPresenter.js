@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components/native";
 import {TouchableOpacity} from "react-native";
 import {useNavigation} from "@react-navigation/native";
-import Day from "../../components/Day";
+import DayContainer from "../../components/Day/DayContainer";
 import ViewWrapper from "../../components/ViewWrapper";
 
 // const window = Dimensions.get("window");
@@ -52,9 +52,7 @@ const MainPresenter = () => {
   return (
     <ViewWrapper>
       <ContentView>
-        <Day />
-        <Day />
-        <Day />
+        <DayContainer/>
       </ContentView>
       <ButtonView>
         <TouchableButton onPress={goToPlus}>

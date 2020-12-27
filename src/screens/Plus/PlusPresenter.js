@@ -12,6 +12,7 @@ import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
 import { addDiary } from "../../redux/diarySlice";
 import { Card, Datepicker, Modal } from "@ui-kitten/components";
+import CenterImage from "../../components/CenterImage";
 
 // TODO: 다른 페이지로 넘어갈 경우 달력 초기화 하애함
 // TODO: 문제점 : ios는 cal 가운데 정렬이 됨 웹이랑 안드로이드는 가운데 정렬이 안됨
@@ -29,18 +30,18 @@ export const HeaderLeftButton = styled.View`
   padding-left: 15px;
 `;
 
-const TouchableImage = styled(TouchableOpacity)`
-  width: 150px;
-  height: 120px;
-  justify-content: center;
-  align-items: center;
-  border-radius: 100px;
-`;
-const ImageDuck = styled.Image`
-  width: 150px;
-  height: 150px;
-  border-radius: 100px;
-`;
+// const TouchableImage = styled(TouchableOpacity)`
+//   width: 150px;
+//   height: 120px;
+//   justify-content: center;
+//   align-items: center;
+//   border-radius: 100px;
+// `;
+// const ImageDuck = styled.Image`
+//   width: 150px;
+//   height: 150px;
+//   border-radius: 100px;
+// `;
 
 const Container = styled.View`
   flex: 1;
@@ -62,7 +63,7 @@ const Row = styled.View`
   padding-top: 8px;
 `;
 
-const TextDay = styled.Text`
+ export const TextDay = styled.Text`
   width: 50px;
   height: 25px;
   justify-content: center;
@@ -75,10 +76,10 @@ const TextDay = styled.Text`
 const ViewText = styled.View`
 `;
 
-const ViewImage = styled.View`
-  margin-bottom: 30px;
-  align-items: center;
-`;
+// const ViewImage = styled.View`
+//   margin-bottom: 30px;
+//   align-items: center;
+// `;
 
 const TextModal = styled.Text`
   font-size: 15px;
@@ -230,12 +231,7 @@ const PlusPresenter = ({ navigation }) => {
           </Row>
         </Card>
       </Modal>
-
-      <ViewImage>
-        <TouchableImage>
-          <ImageDuck source={require("../../img/abo.png")} />
-        </TouchableImage>
-      </ViewImage>
+      <CenterImage source={require("../../img/abo.png")}/>
       <ViewText>
         <TextInput
           placeholder="Input message"

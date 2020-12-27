@@ -4,7 +4,13 @@ import dayjs from "dayjs";
 const diaryData = createSlice({
   name: "diary",
   initialState: {
-    list: [],
+    list: [
+      {
+        text: "첫화면에 항상 나오는 내생일",
+        date: 1579705200000,
+        id: 1609084305318,
+      },
+    ],
     // form: {
     //   date: +dayjs(),
     //   text: "",

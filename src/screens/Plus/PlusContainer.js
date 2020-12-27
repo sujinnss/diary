@@ -6,7 +6,7 @@ import { ScrollView } from "react-native";
 
 // 1.상단의 날짜
 // 2. 싱단 왼쪽의 날짜 조회
-
+// 안드로이드 안먹힘
 const ViewOuter = styled.View`
  
 `;
