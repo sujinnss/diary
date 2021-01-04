@@ -40,11 +40,8 @@ const DetailPresenter = ({ allDataList, navigation }) => {
     const { y: onScrollY } = e.nativeEvent.contentOffset;
     console.log("현재 스크롤 위치 ", onScrollY);
     titlePosition.current?.map((position) => {
-      // console.log(position.pos);
-      console.log(titlePosition);
-      // console.log(onScrollY);
-      console.log(round(position.pos), onScrollY);
-      if (round(position.pos) === onScrollY) {
+      console.log(position.pos, onScrollY);
+      if (position.pos - 20 <= onScrollY) {
         console.log("같음");
         setTitleDate(position.pos);
       }
