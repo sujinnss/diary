@@ -1,21 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Ionicons } from "@expo/vector-icons";
-import {
-  Image,
-  ImageBackground,
-  StatusBar,
-  View,
-  SafeAreaView,
-  Platform,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Pressable,
-  ScrollView,
-} from "react-native";
-import { Provider } from "react-redux";
+import React, {useState} from "react";
+import {Ionicons} from "@expo/vector-icons";
+import {Image, ImageBackground, SafeAreaView, StatusBar, View,} from "react-native";
+import {Provider} from "react-redux";
 import AppLoading from "expo-app-loading";
-import { Asset } from "expo-asset";
-import { NavigationContainer } from "@react-navigation/native";
+import {Asset} from "expo-asset";
+import {NavigationContainer} from "@react-navigation/native";
 import Stack from "./src/navigation/Stack";
 import * as Font from "expo-font";
 import store from "./src/redux/store";

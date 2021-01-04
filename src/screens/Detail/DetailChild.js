@@ -6,6 +6,9 @@ import CenterImage from "../../components/CenterImage";
 import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native";
 
+const TopText = styled.Text`
+  border: red;
+`;
 const Container = styled.View`
   width: 100%;
   border: 1.4px #4a4a4a;
@@ -31,6 +34,7 @@ const SettingIcon = styled(Ionicons)`
 const DetailChild = ({ date, text }) => {
   return (
     <>
+      <TopText>{date}</TopText>
       <Container>
         <TextDay>{dayjs(date).format("DD")}일</TextDay>
         <CenterImage source={require("../../img/abo.png")} />

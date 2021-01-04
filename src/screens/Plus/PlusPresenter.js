@@ -6,6 +6,8 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Platform,
+  View,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import dayjs from "dayjs";
@@ -19,9 +21,31 @@ import CenterImage from "../../components/CenterImage";
 // TODO 모달의 다른 부분을 클릭시 적용 안되게 해야함
 // TODO: 네비게이션의 header랑 safeArea 부분까지 모달의 back 배경으로 변경돼야함
 // TODO: 모달,back유효성 검사
-
+// TODO: 웹일 경우 textInput 높이값 조절 하기
 
 const { width, height } = Dimensions.get("screen");
+
+const ContainerStyles = StyleSheet.create({
+  mobile: {
+    flex: 1,
+    width: "100%",
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    paddingBottom:30,
+    borderWidth:1.4,
+    borderRadius:4,
+    borderColor: "black",
+  },
+  web: {
+    width: "100%",
+    height: height/2.5,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    borderWidth:1.4,
+    borderRadius:4,
+    borderColor: "black",
+  },
+});
 
 export const HeaderRightButton = styled.View`
   padding-right: 15px;
@@ -43,13 +67,13 @@ export const HeaderLeftButton = styled.View`
 //   border-radius: 100px;
 // `;
 
-const Container = styled.View`
-  flex: 1;
-  width: 100%;
-  border: 1.4px #4a4a4a;
-  padding: 20px;
-`;
-// Container.displayName = "StyledContainer";
+// const Container = styled.View`
+//   flex: 1;
+//   width: 100%;
+//   border: 1.4px #4a4a4a;
+//   padding: 20px;
+// `;
+//
 
 const ViewDateTimePicker = styled.View`
   width: 90%;
@@ -63,7 +87,7 @@ const Row = styled.View`
   padding-top: 8px;
 `;
 
- export const TextDay = styled.Text`
+export const TextDay = styled.Text`
   width: 50px;
   height: 25px;
   justify-content: center;
@@ -73,8 +97,7 @@ const Row = styled.View`
   font-size: 20px;
 `;
 
-const ViewText = styled.View`
-`;
+const ViewText = styled.View``;
 
 // const ViewImage = styled.View`
 //   margin-bottom: 30px;
@@ -101,6 +124,8 @@ const styles = StyleSheet.create({
 
 const PlusPresenter = ({ navigation }) => {
   console.log(navigation);
+  console.log(height/2)
+
   const dispatch = useDispatch();
   // const { date, text } = useSelector((store) => store.diary.form);
 
@@ -156,7 +181,7 @@ const PlusPresenter = ({ navigation }) => {
             size={30}
             color="black"
             onPress={() => {
-              setModalVisible(false)
+              setModalVisible(false);
               setBackModalVisible(true);
               Keyboard.dismiss();
             }}
@@ -203,7 +228,13 @@ const PlusPresenter = ({ navigation }) => {
   }, [navigation, text, date, backModalVisible, scrollRef]);
 
   return (
-    <Container>
+    <View
+      style={
+        Platform.OS === "ios" || Platform.OS === "android"
+          ? ContainerStyles.mobile
+          : ContainerStyles.web
+      }
+    >
       <TextDay onPress={showMode}>{dayjs(date).format("DD")}일</TextDay>
       <Modal
         visible={modalVisible}
@@ -231,7 +262,7 @@ const PlusPresenter = ({ navigation }) => {
           </Row>
         </Card>
       </Modal>
-      <CenterImage source={require("../../img/abo.png")}/>
+      <CenterImage source={require("../../img/abo.png")} />
       <ViewText>
         <TextInput
           placeholder="Input message"
@@ -243,7 +274,7 @@ const PlusPresenter = ({ navigation }) => {
           maxLength={1000}
         />
       </ViewText>
-    </Container>
+    </View>
   );
 };
 
