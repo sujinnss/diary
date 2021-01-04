@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import DetailChild from "./DetailChild";
 import ViewWrapper from "../../components/ViewWrapper";
 import moment from "moment";
-import { groupBy, sortBy } from "lodash";
+import { groupBy, round, sortBy } from "lodash";
 import { ScrollView } from "react-native";
 import styled from "styled-components/native";
 
@@ -24,11 +24,40 @@ const TitleDate = styled.Text`
   font-size: 20px;
 `;
 
-const DetailPresenter = ({ allDataList }) => {
-  // const onLayout = (e) => {
-  //   const { location } = e.nativeEvent.layout;
-  //   console.log(location)
-  // };
+const DetailPresenter = ({ allDataList, navigation }) => {
+  const [titleDate, setTitleDate] = useState();
+  const titlePosition = useRef([]);
+
+  const onLayout = (e) => {
+    const { y: onLayoutY } = e.nativeEvent.layout;
+    console.log(e.nativeEvent.layout);
+    console.log(onLayoutY);
+    titlePosition.current.push({ pos: onLayoutY });
+    console.log(titlePosition);
+  };
+
+  const onScroll = (e) => {
+    const { y: onScrollY } = e.nativeEvent.contentOffset;
+    console.log("현재 스크롤 위치 ", onScrollY);
+    titlePosition.current?.map((position) => {
+      // console.log(position.pos);
+      console.log(titlePosition);
+      // console.log(onScrollY);
+      console.log(round(position.pos), onScrollY);
+      if (round(position.pos) === onScrollY) {
+        console.log("같음");
+        setTitleDate(position.pos);
+      }
+    });
+  };
+
+  useLayoutEffect(() => {
+    console.log(titleDate);
+    navigation.setOptions({
+      title: titleDate,
+    });
+  }, [titleDate]);
+
   // 1번 date를 정렬
   const sortDataList = sortBy(allDataList, "date");
 
@@ -42,34 +71,31 @@ const DetailPresenter = ({ allDataList }) => {
 
   const groupDataList = groupBy(reFormatList, "dateFormat");
   const allDataKeys = Object.keys(groupDataList);
-  console.log(groupDataList);
-  console.log(allDataKeys);
+
   return (
-    <ViewWrapper>
-      {allDataKeys.map((key) => {
-        console.log(key);
-        let listValue = groupDataList[key];
-        console.log(allDataList);
-        console.log(listValue);
-        return (
-          <>
-            <TitleDateContainer>
-              <TitleDate>{key}</TitleDate>
-            </TitleDateContainer>
-            {listValue.map((value) => {
-              console.log(value);
-              return (
-                <DetailChild
-                  date={value.date}
-                  text={value.text}
-                  key={value.id}
-                />
-              );
-            })}
-          </>
-        );
-      })}
-    </ViewWrapper>
+    <ScrollView onScroll={onScroll}>
+      <ViewWrapper>
+        {allDataKeys.map((key) => {
+          let listValue = groupDataList[key];
+          return (
+            <>
+              <TitleDateContainer onLayout={onLayout}>
+                <TitleDate>{key}</TitleDate>
+              </TitleDateContainer>
+              {listValue.map((value) => {
+                return (
+                  <DetailChild
+                    date={value.date}
+                    text={value.text}
+                    key={value.id}
+                  />
+                );
+              })}
+            </>
+          );
+        })}
+      </ViewWrapper>
+    </ScrollView>
   );
 };
 

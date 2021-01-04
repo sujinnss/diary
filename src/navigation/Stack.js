@@ -40,13 +40,15 @@ const Stack = () => {
         />
         <StackNav.Screen name="Setting" component={Setting} />
         <StackNav.Screen
-            options={{
-                title: "Detail",
-                cardStyle: {
-                    backgroundColor: "#EEEDE6",
-                },
-            }}
-            name="Detail" component={Detail} />
+          options={{
+            title: "",
+            cardStyle: {
+              backgroundColor: "#EEEDE6",
+            },
+          }}
+          name="Detail"
+          component={Detail}
+        />
       </StackNav.Navigator>
     </>
   );

@@ -5,15 +5,11 @@ import { ScrollView } from "react-native";
 
 // 리덕스에서 id 를 조회해 데이터를 뿌려준다
 
-const DetailContainer = () => {
+const DetailContainer = ({ navigation }) => {
   const { list } = useSelector((store) => store.diary);
   console.log(list);
 
-  return (
-    <ScrollView>
-      <DetailPresenter allDataList={list} />
-    </ScrollView>
-  );
+  return <DetailPresenter allDataList={list} navigation={navigation} />;
 };
 
 export default DetailContainer;
