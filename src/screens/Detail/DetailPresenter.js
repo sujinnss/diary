@@ -28,33 +28,6 @@ const DetailPresenter = ({ allDataList, navigation }) => {
   const [titleDate, setTitleDate] = useState();
   const titlePosition = useRef([]);
 
-  const onLayout = (e) => {
-    const { y: onLayoutY } = e.nativeEvent.layout;
-    console.log(e.nativeEvent.layout);
-    console.log(onLayoutY);
-    titlePosition.current.push({ pos: onLayoutY });
-    console.log(titlePosition);
-  };
-
-  const onScroll = (e) => {
-    const { y: onScrollY } = e.nativeEvent.contentOffset;
-    console.log("현재 스크롤 위치 ", onScrollY);
-    titlePosition.current?.map((position) => {
-      console.log(position.pos, onScrollY);
-      if (position.pos - 20 <= onScrollY) {
-        console.log("같음");
-        setTitleDate(position.pos);
-      }
-    });
-  };
-
-  useLayoutEffect(() => {
-    console.log(titleDate);
-    navigation.setOptions({
-      title: titleDate,
-    });
-  }, [titleDate]);
-
   // 1번 date를 정렬
   const sortDataList = sortBy(allDataList, "date");
 
@@ -69,6 +42,37 @@ const DetailPresenter = ({ allDataList, navigation }) => {
   const groupDataList = groupBy(reFormatList, "dateFormat");
   const allDataKeys = Object.keys(groupDataList);
 
+  const onLayout = (e, key) => {
+    const { y: onLayoutY } = e.nativeEvent.layout;
+    console.log(e.nativeEvent.layout);
+    console.log(onLayoutY);
+
+    titlePosition.current.push({ pos: onLayoutY, title: key });
+    console.log(titlePosition);
+  };
+
+  const onScroll = (e) => {
+    const { y: onScrollY } = e.nativeEvent.contentOffset;
+    console.log("현재 스크롤 위치 ", onScrollY);
+    const sortPosition = sortBy(titlePosition.current, "pos").reverse();
+    console.log(titlePosition)
+    console.log(sortPosition)
+    const titleUpdatable = sortPosition.filter((position) => {
+      console.log(position.pos, onScrollY);
+      return position.pos - 20 <= onScrollY;
+    });
+    if (titleUpdatable.length > 0) {
+      setTitleDate(titleUpdatable[0].title);
+    }
+  };
+
+  useLayoutEffect(() => {
+    console.log(titleDate);
+    navigation.setOptions({
+      title: titleDate,
+    });
+  }, [titleDate]);
+
   return (
     <ScrollView onScroll={onScroll}>
       <ViewWrapper>
@@ -76,7 +80,11 @@ const DetailPresenter = ({ allDataList, navigation }) => {
           let listValue = groupDataList[key];
           return (
             <>
-              <TitleDateContainer onLayout={onLayout}>
+              <TitleDateContainer
+                onLayout={(e) => {
+                  onLayout(e, key);
+                }}
+              >
                 <TitleDate>{key}</TitleDate>
               </TitleDateContainer>
               {listValue.map((value) => {
