@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { TextDay } from "../Plus/PlusPresenter";
 import CenterImage from "../../components/CenterImage";
 import { Ionicons } from "@expo/vector-icons";
+import moment from "moment";
 import { ScrollView } from "react-native";
 
 const TopText = styled.Text`
@@ -34,7 +35,7 @@ const SettingIcon = styled(Ionicons)`
 const DetailChild = ({ date, text }) => {
   return (
     <>
-      <TopText>{date}</TopText>
+      {/*<TopText>{dayjs(date).format("YYYY-MM")}</TopText>*/}
       <Container>
         <TextDay>{dayjs(date).format("DD")}일</TextDay>
         <CenterImage source={require("../../img/abo.png")} />
