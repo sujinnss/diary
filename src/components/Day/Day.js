@@ -6,8 +6,8 @@ import Detail from "../../screens/Detail";
 import store from "../../redux/store";
 
 const TouchableButton = styled(TouchableOpacity)`
-  width: 80px;
-  height: 80px;
+  width: 68px;
+  height: 68px;
   justify-content: center;
   align-items: center;
   border-radius: 100px;
@@ -21,8 +21,8 @@ const TouchableButton = styled(TouchableOpacity)`
 // `;
 
 const Image = styled.Image`
-  width: 80px;
-  height: 80px;
+  width: 69px;
+  height: 69px;
   border-radius: 50px;
 `;
 
