@@ -43,7 +43,7 @@ const ContentView = styled.View`
 `;
 
 const MainPresenter = ({ nav }) => {
-  const today = moment().format("YYYY-MM");
+  const today = moment().format("MMMM YYYY");
   const [mainHeaderTitle, setMainHeaderTitle] = useState("123");
 
   const navigation = useNavigation();
@@ -52,18 +52,16 @@ const MainPresenter = ({ nav }) => {
   const { list } = useSelector((store) => store.diary);
 
   const sortDataList = sortBy(list, "date");
+
   const reFormatList = sortDataList.map((list) => {
     return {
       ...list,
-      dateFormat: moment(list.date).format("YYYY-MM"),
-      dataFormatEn:moment(list.date).format("MMMM YYYY")
+      dateFormat: moment(list.date).format("MMMM YYYY"),
     };
   });
   const groupDataList = groupBy(reFormatList, "dateFormat");
-  const groupDataListEn = groupBy(reFormatList, "dataFormatEn");
 
   const allDataKeys = Object.keys(groupDataList);
-  const allDataKeysEn = Object.keys(groupDataListEn);
 
   const objectForArray = Object.entries(groupDataList);
 
@@ -78,8 +76,7 @@ const MainPresenter = ({ nav }) => {
   const handlePagerEvent = (e) => {
     console.log(e);
     const { position } = e.nativeEvent;
-    setMainHeaderTitle(allDataKeysEn[position]);
-
+    setMainHeaderTitle(allDataKeys[position]);
   };
 
   return (

@@ -27,9 +27,7 @@ const TitleDate = styled.Text`
 
 const DetailPresenter = ({ allDataList, navigation }) => {
   const titlePosition = useRef([]);
-  console.log("------****---------", allDataList);
-  const firstDate = moment(allDataList[0].date).format("YYYY-MM");
-  console.log("-----------------", firstDate);
+  const firstDate = moment(allDataList[0].date).format("MMMM YYYY");
   const [titleDate, setTitleDate] = useState(firstDate);
 
   // 1번 date를 정렬
@@ -39,7 +37,7 @@ const DetailPresenter = ({ allDataList, navigation }) => {
   const reFormatList = sortDataList.map((list) => {
     return {
       ...list,
-      dateFormat: moment(list.date).format("YYYY-MM"),
+      dateFormat: moment(list.date).format("MMMM YYYY"),
     };
   });
 
