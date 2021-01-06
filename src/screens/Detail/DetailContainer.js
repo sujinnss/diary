@@ -7,7 +7,6 @@ import { ScrollView } from "react-native";
 
 const DetailContainer = ({ navigation }) => {
   const { list } = useSelector((store) => store.diary);
-  console.log(list);
 
   return <DetailPresenter allDataList={list} navigation={navigation} />;
 };

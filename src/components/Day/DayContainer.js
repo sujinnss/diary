@@ -9,18 +9,16 @@ import moment from "moment";
 
 const DayContainer = ({ contents }) => {
   console.log("content:", contents);
-  console.log("data:", contents[1]);
-  console.log(
-    "map:",
-    contents[1].map((d) => d.id)
-  );
+  // console.log("data:", contents[1]);
+  // console.log(
+  //   "map:",
+  //   contents[1].map((d) => d.id)
+  // );
+  //
+  // const { list } = useSelector((store) => store.diary);
 
-  const { list } = useSelector((store) => store.diary);
-
-  return contents.map((data, index) => {
-    console.log("text", data);
-
-    return <Day id={data.id} key={index} />;
+  return contents[1].map((item,index) => {
+    return <Day id={item.id} key={index} />;
   });
 };
 

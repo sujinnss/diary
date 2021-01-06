@@ -6,6 +6,8 @@ import CenterImage from "../../components/CenterImage";
 import { Ionicons } from "@expo/vector-icons";
 import moment from "moment";
 import { ScrollView } from "react-native";
+import { useDispatch } from "react-redux";
+import { deleteDiary } from "../../redux/diarySlice";
 
 const TopText = styled.Text`
   border: red;
@@ -32,10 +34,20 @@ const SettingIcon = styled(Ionicons)`
   margin: 10px 15px 10px 0;
 `;
 
-const DetailChild = ({ date, text }) => {
+const DetailChild = ({ navigation, date, text, id }) => {
+  console.log("key", id);
+
+  const dispatch = useDispatch();
+  const listId = id;
+
+  const handleDeleteDiary = () => {
+    console.log("삭제 id", listId);
+      console.log("삭제 text",text)
+    dispatch(deleteDiary({ id: listId }));
+    navigation.navigate("Main");
+  };
   return (
     <>
-      {/*<TopText>{dayjs(date).format("YYYY-MM")}</TopText>*/}
       <Container>
         <TextDay>{dayjs(date).format("DD")}일</TextDay>
         <CenterImage source={require("../../img/abo.png")} />
@@ -45,7 +57,12 @@ const DetailChild = ({ date, text }) => {
       </Container>
       <Icons>
         <SettingIcon name="create-outline" size={28} color="black" />
-        <SettingIcon name="ios-trash-outline" size={28} color="black" />
+        <SettingIcon
+          name="ios-trash-outline"
+          size={28}
+          color="black"
+          onPress={handleDeleteDiary}
+        />
       </Icons>
     </>
   );

@@ -27,8 +27,9 @@ const TitleDate = styled.Text`
 
 const DetailPresenter = ({ allDataList, navigation }) => {
   const titlePosition = useRef([]);
+  console.log("------****---------", allDataList);
   const firstDate = moment(allDataList[0].date).format("YYYY-MM");
-
+  console.log("-----------------", firstDate);
   const [titleDate, setTitleDate] = useState(firstDate);
 
   // 1번 date를 정렬
@@ -53,7 +54,6 @@ const DetailPresenter = ({ allDataList, navigation }) => {
     titlePosition.current.push({ pos: onLayoutY, title: key });
     console.log(titlePosition);
   };
-
 
   const onScroll = (e) => {
     const { y: onScrollY } = e.nativeEvent.contentOffset;
@@ -94,9 +94,10 @@ const DetailPresenter = ({ allDataList, navigation }) => {
               {listValue.map((value) => {
                 return (
                   <DetailChild
+                    navigation={navigation}
                     date={value.date}
                     text={value.text}
-                    key={value.id}
+                    id={value.id}
                   />
                 );
               })}

@@ -32,7 +32,7 @@ const Stack = () => {
       >
         <StackNav.Screen
           options={{
-            title: dayjs().format("YYYY년 MM월"),
+            title:"",
           }}
           name="Main"
           component={Main}

@@ -66,16 +66,23 @@ const diaryData = createSlice({
         id: Date.now(),
       });
     },
-    deleteDiary: (state, action) =>
-      state.filter((state) => state.id !== action.payload),
-    // changeText: (state, action) => {
-    //   state.form.text = action.payload;
-    // },
-    // changeDate: (state, action) => {
-    //   // console.log(state)
-    //   console.log(dayjs(action.payload).format("YYYY-MM-DD"))
-    //   state.form.date = action.payload;
-    // },
+    deleteDiary: (state, action) => {
+      console.log("state", state);
+      console.log("action", action);
+
+      // 1. 리턴하지 않는 방법
+      const indexNum = state.list.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      state.list.splice(indexNum, 1);
+
+      // 2. 리턴 하는 방법
+      // const newList = {
+      //   ...state,
+      //   list: state.list.filter((data) => data.id !== action.payload.id),
+      // };
+      // return newList;
+    },
   },
 });
 

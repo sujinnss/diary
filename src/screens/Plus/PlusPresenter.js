@@ -123,8 +123,7 @@ const styles = StyleSheet.create({
 });
 
 const PlusPresenter = ({ navigation }) => {
-  console.log(navigation);
-  console.log(height/2)
+
 
   const dispatch = useDispatch();
   // const { date, text } = useSelector((store) => store.diary.form);
@@ -155,22 +154,19 @@ const PlusPresenter = ({ navigation }) => {
   };
 
   const handleChangeText = (nextText) => {
-    console.log(nextText);
     setText(nextText);
     // dispatch(changeText(text));
   };
 
   const handleAddDiary = () => {
-    console.log(text);
-    console.log(date);
     dispatch(addDiary({ text, date: +date }));
     navigation.popToTop();
   };
 
-  useEffect(() => {
-    console.log(date);
-    console.log(dayjs(date).format("MM-YYYY"));
-  }, [date]);
+  // useEffect(() => {
+  //   console.log(date);
+  //   console.log(dayjs(date).format("MM-YYYY"));
+  // }, [date]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
