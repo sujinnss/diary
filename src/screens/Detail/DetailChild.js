@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components/native";
 import dayjs from "dayjs";
-import { TextDay } from "../Plus/PlusPresenter";
+import {TextContainer, TextDay, TextEnDay} from "../Plus/PlusPresenter";
 import CenterImage from "../../components/CenterImage";
 import { Ionicons } from "@expo/vector-icons";
 import moment from "moment";
 import { ScrollView } from "react-native";
 import { useDispatch } from "react-redux";
 import { deleteDiary } from "../../redux/diarySlice";
+import DayContainer from "../../components/Day/DayContainer";
 
 const TopText = styled.Text`
   border: red;
@@ -42,14 +43,17 @@ const DetailChild = ({ navigation, date, text, id }) => {
 
   const handleDeleteDiary = () => {
     console.log("삭제 id", listId);
-      console.log("삭제 text",text)
+    console.log("삭제 text", text);
     dispatch(deleteDiary({ id: listId }));
     navigation.navigate("Main");
   };
   return (
     <>
       <Container>
-        <TextDay>{dayjs(date).format("DD")}일</TextDay>
+        <TextContainer>
+          <TextDay>{dayjs(date).format("DD")}일</TextDay>
+          <TextEnDay>{moment(date).format("ddd")}</TextEnDay>
+        </TextContainer>
         <CenterImage source={require("../../img/abo.png")} />
         <ViewText>
           <Text>{text}</Text>

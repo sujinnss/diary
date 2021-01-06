@@ -5,6 +5,7 @@ import { TouchableOpacity } from "react-native";
 const ViewImage = styled.View`
   margin-bottom: 30px;
   align-items: center;
+  margin-top: 15px;
 `;
 
 const TouchableImage = styled(TouchableOpacity)`
@@ -20,7 +21,7 @@ const ImageDuck = styled.Image`
   height: 150px;
   border-radius: 100px;
 `;
-const CenterImage = ({source}) => {
+const CenterImage = ({ source }) => {
   return (
     <ViewImage>
       <TouchableImage>

@@ -56,10 +56,15 @@ const MainPresenter = ({ nav }) => {
     return {
       ...list,
       dateFormat: moment(list.date).format("YYYY-MM"),
+      dataFormatEn:moment(list.date).format("MMMM YYYY")
     };
   });
   const groupDataList = groupBy(reFormatList, "dateFormat");
+  const groupDataListEn = groupBy(reFormatList, "dataFormatEn");
+
   const allDataKeys = Object.keys(groupDataList);
+  const allDataKeysEn = Object.keys(groupDataListEn);
+
   const objectForArray = Object.entries(groupDataList);
 
   const arrKey = objectForArray.findIndex((data) => data[0] === today);
@@ -73,7 +78,7 @@ const MainPresenter = ({ nav }) => {
   const handlePagerEvent = (e) => {
     console.log(e);
     const { position } = e.nativeEvent;
-    setMainHeaderTitle(allDataKeys[position]);
+    setMainHeaderTitle(allDataKeysEn[position]);
 
   };
 

@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { addDiary } from "../../redux/diarySlice";
 import { Card, Datepicker, Modal } from "@ui-kitten/components";
 import CenterImage from "../../components/CenterImage";
+import moment from "moment";
 
 // TODO: 다른 페이지로 넘어갈 경우 달력 초기화 하애함
 // TODO: 문제점 : ios는 cal 가운데 정렬이 됨 웹이랑 안드로이드는 가운데 정렬이 안됨
@@ -31,18 +32,18 @@ const ContainerStyles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: 20,
     paddingVertical: 20,
-    paddingBottom:30,
-    borderWidth:1.4,
-    borderRadius:4,
+    paddingBottom: 30,
+    borderWidth: 1.4,
+    borderRadius: 4,
     borderColor: "black",
   },
   web: {
     width: "100%",
-    height: height/2.5,
+    height: height / 2.5,
     paddingHorizontal: 20,
     paddingVertical: 20,
-    borderWidth:1.4,
-    borderRadius:4,
+    borderWidth: 1.4,
+    borderRadius: 4,
     borderColor: "black",
   },
 });
@@ -87,14 +88,26 @@ const Row = styled.View`
   padding-top: 8px;
 `;
 
+export const TextContainer = styled.View`
+  width: 15%;
+  border-bottom-width: 1.4px;
+  padding-bottom: 5px;
+  flex-direction: row;
+`;
+
 export const TextDay = styled.Text`
-  width: 50px;
   height: 25px;
   justify-content: center;
-  align-items: center;
+  align-self: center;
   font-weight: bold;
   color: black;
   font-size: 20px;
+`;
+export const TextEnDay = styled.Text`
+  font-size: 11px;
+  margin-left: 7px;
+  align-self: flex-end;
+  justify-content: center;
 `;
 
 const ViewText = styled.View``;
@@ -123,8 +136,6 @@ const styles = StyleSheet.create({
 });
 
 const PlusPresenter = ({ navigation }) => {
-
-
   const dispatch = useDispatch();
   // const { date, text } = useSelector((store) => store.diary.form);
 
@@ -231,7 +242,10 @@ const PlusPresenter = ({ navigation }) => {
           : ContainerStyles.web
       }
     >
-      <TextDay onPress={showMode}>{dayjs(date).format("DD")}일</TextDay>
+      <TextContainer>
+        <TextDay onPress={showMode}>{dayjs(date).format("DD")}일</TextDay>
+        <TextEnDay>{moment(date).format("ddd")}</TextEnDay>
+      </TextContainer>
       <Modal
         visible={modalVisible}
         backdropStyle={styles.backdrop}
